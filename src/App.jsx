@@ -1,21 +1,36 @@
-import { useState } from 'react';
-import { initialWorkflow } from './data/initialwork';
+import React, { useState } from 'react';
 import Node from './components/Node';
-import './index.css';
+import { initialWorkflow, createNode } from './utils/workflow';
 
 function App() {
   const [workflow, setWorkflow] = useState(initialWorkflow);
 
+  const addNodeToFlow = (nodes, parentId, newNode) => {
+    return nodes.map((node) => {
+      if (node.id === parentId) {
+        return { ...node, children: [...node.children, newNode] };
+      }
+      if (node.children.length > 0) {
+        return { ...node, children: addNodeToFlow(node.children, parentId, newNode) };
+      }
+      return node;
+    });
+  };
+
+  const handleAddNode = (parentId, type) => {
+    const newNode = createNode(type);
+    if (workflow.id === parentId) {
+      setWorkflow({ ...workflow, children: [...workflow.children, newNode] });
+    } else {
+      const updatedChildren = addNodeToFlow(workflow.children, parentId, newNode);
+      setWorkflow({ ...workflow, children: updatedChildren });
+    }
+  };
+
   return (
-    <div className="app">
-      <header className="header">
-        <h1>Workflow Builder</h1>
-      </header>
-      <div className="canvas">
-        <div className="workflow-tree">
-          <Node node={workflow} />
-        </div>
-      </div>
+    <div className="workflow-canvas">
+      <h1>Workflow Builder</h1>
+      <Node data={workflow} onAddNode={handleAddNode} />
     </div>
   );
 }

@@ -1,7 +1,17 @@
 .workflow-tree {
-  padding: 40px 20px;
-  display: flex;
-  justify-content: center;
+  padding: 60px 40px;
+  overflow-x: auto;
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.node-container {
+  display: inline-block;
+  text-align: center;
+}
+
+.node-wrapper {
+  margin: 40px 0;
 }
 
 .node-branch {
