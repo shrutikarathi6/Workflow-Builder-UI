@@ -1,6 +1,6 @@
-// src/App.jsx
 import { useState } from 'react';
-import { initialWorkflow } from './data/initialWorkflow';
+import { initialWorkflow } from './data/initialwork';
+import Node from './components/Node';
 import './index.css';
 
 function App() {
@@ -12,8 +12,9 @@ function App() {
         <h1>Workflow Builder</h1>
       </header>
       <div className="canvas">
-        <pre>{JSON.stringify(workflow, null, 2)}</pre>
-  
+        <div className="workflow-tree">
+          <Node node={workflow} />
+        </div>
       </div>
     </div>
   );
